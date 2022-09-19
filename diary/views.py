@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from diary.models import Page
+from .forms import PageForm
 
 def page_list(request):
     context = dict()
@@ -17,3 +18,11 @@ def page_detail(request, page_id):
 
 def info(request):
     return render(request, 'diary/info.html')
+
+
+def page_create(request):
+    context = dict()
+    form = PageForm()
+    context["form"] = form
+    return render(request, 'diary/page_form.html', context)
+    
