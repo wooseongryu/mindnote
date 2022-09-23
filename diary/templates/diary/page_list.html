@@ -1,5 +1,6 @@
 {% extends './base.html' %}
 {% block content %}
+    {% if object_list %}
     <div class="wrap-note">
         <div class="note">         
             <div class="note-list">
@@ -22,4 +23,14 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="wrap-default">
+        <div class="default">
+            <div class="default-box">
+                <p>"오늘 하루는 어땠나요? 당신의 하루를 들려주세요"</p>
+                <a href="{% url 'page-create' %}">일기쓰기</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock content %}
