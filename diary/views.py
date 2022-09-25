@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.views.generic import CreateView, ListView, DetailView, UpdateView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.urls import reverse
 from diary.models import Page
 from .forms import PageForm
@@ -43,13 +43,13 @@ class PageUpdateView(UpdateView):
         return reverse('page-detail', kwargs={'page_id': self.object.id})
 
 
-def page_delete(request, page_id):
-    object = Page.objects.get(id=page_id)
-    if request.method == 'POST':
-        object.delete()
-        return redirect('page-list')
-    else:
-        return render(request, 'diary/page_confirm_delete.html', {'object': object})
+class PageDeleteView(DeleteView):
+    model = Page
+    template_name = 'diary/page_confirm_delete.html'
+    pk_url_kwarg = 'page_id'
+
+    def get_success_url(self):
+        return reverse('page-list')
 
 
 def index(request):
